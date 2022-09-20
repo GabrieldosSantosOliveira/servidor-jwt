@@ -23,7 +23,7 @@ app.use(
     secret: process.env.SECRET,
     algorithms: ["HS256"],
     getToken: req => req.cookies.token
-  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/user"] })
+  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/user", "/list"] })
 );
 app.use(routerAuth);
 app.use(routerUser);

@@ -1,7 +1,7 @@
 // JWT
 require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
-
+const { usuario } = require('./../../models');
 class Auth {
   static async authentication(req, res) {
     res.render('autenticar');
@@ -10,7 +10,9 @@ class Auth {
     res.render("home")
   }
   static async login(req, res) {
-    if (req.body.user === 'luiz' && req.body.password === '123') {
+    const { user, password } = req.body;
+    const data = await usuario.findOne({ where: { user } });
+    if (user === data.user && password === data.password) {
       const id = 1;
       const token = jwt.sign({ id }, process.env.SECRET, {
         expiresIn: 300 // expires in 5min

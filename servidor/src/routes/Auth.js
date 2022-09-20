@@ -10,4 +10,5 @@ routerAuth.get('/', Auth.home);
 routerAuth.post('/logar', Auth.login);
 
 routerAuth.post('/deslogar', Auth.logout);
+
 module.exports = { routerAuth };
