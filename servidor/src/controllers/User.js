@@ -1,5 +1,5 @@
 const { usuario } = require('./../../models');
-
+const { encrypt } = require('./../utils/encrypt');
 class User {
   static async index(req, res) {
     const users = await usuario.findAll();
@@ -7,15 +7,21 @@ class User {
   }
   static async create(req, res) {
     const { name, password, user } = req.body;
-    const data = await usuario.create({ name, password, user });
-    res.json(data);
+    await usuario.create({
+      name,
+      password: encrypt(password),
+      user
+    });
+    res.status(201).json({
+      message: 'Usuário criado com sucesso!'
+    });
   }
   static async findAll(req, res) {
     const users = await usuario.findAll();
-    res.render("user/All", { users });
+    res.render('user/All', { users });
   }
   static async createUser(req, res) {
-    res.render("user/create");
+    res.render('user/create');
   }
 }
 module.exports = { User };
